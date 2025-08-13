@@ -22,14 +22,14 @@ public class MissoesController {
 
     // Listar missoes por id
     @GetMapping("/listar/{id}")
-    public MissoesModel listarPorId(@PathVariable Long id){
+    public MissoesModel listarPorId(@PathVariable Long id){ // @PathVariable Significa que é algo que o usuário está passando
         return missoesService.listarPorId(id);
     }
 
     // Post -- Mandar uma requisição para criar as missoes
     @PostMapping("/criar")
-    public String criarMissao(){
-        return "Missao criada!";
+    public MissoesModel criarMissao(@RequestBody MissoesModel missao){ // @RequestBody vai pegar o Json que o usuário mandou e serializar para o banco de dados
+        return missoesService.criarMissao(missao);
     }
 
     // PUT -- Mandar uma requisição para alterar as missoes

@@ -22,8 +22,8 @@ public class NinjaController {
 
     // Adicionar ninja (CREATE)
     @PostMapping("/criar")
-    public String criarNinja(){
-        return "Ninja criado!";
+    public NinjaModel criarNinja(@RequestBody NinjaModel ninja){ // @RequestBody vai pegar o Json que o usuário mandou e serializar para o banco de dados
+        return ninjaService.criarNinja(ninja);
     }
 
     // Mostrar todos os ninjas (READ)
