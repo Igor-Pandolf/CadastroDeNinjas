@@ -11,9 +11,11 @@ import java.util.Optional;
 public class NinjaService {
 
     private NinjaRepository ninjaRepository;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
     // Listar todos os meus ninjas
@@ -28,8 +30,15 @@ public class NinjaService {
     }
 
     // Criar um novo ninja
-    public NinjaModel criarNinja(NinjaModel ninja){
-        return ninjaRepository.save(ninja);
+    public NinjaDTO criarNinja(NinjaDTO ninja){
+        // 1. Traduz de DTO para Entidade
+        NinjaModel ninjaModel = ninjaMapper.map(ninja);
+
+        // 2. Persiste a Entidade no banco de dados
+        ninjaModel = ninjaRepository.save(ninjaModel);
+
+        // 3. Traduz a Entidade (agora com ID) de volta para DTO
+        return ninjaMapper.map(ninjaModel);
     }
 
     // Deletar um ninja -- VOID pq não retorna nada, apenas deleta

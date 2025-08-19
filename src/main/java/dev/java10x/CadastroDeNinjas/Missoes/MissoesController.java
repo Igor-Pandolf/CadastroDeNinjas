@@ -28,7 +28,7 @@ public class MissoesController {
 
     // Post -- Mandar uma requisição para criar as missoes
     @PostMapping("/criar")
-    public MissoesModel criarMissao(@RequestBody MissoesModel missao){ // @RequestBody vai pegar o Json que o usuário mandou e serializar para o banco de dados
+    public MissoesDTO criarMissao(@RequestBody MissoesDTO missao){ // @RequestBody vai pegar o Json que o usuário mandou e serializar para o banco de dados
         return missoesService.criarMissao(missao);
     }
 

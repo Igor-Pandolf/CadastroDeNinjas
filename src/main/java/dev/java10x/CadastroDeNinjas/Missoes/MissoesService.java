@@ -9,9 +9,11 @@ import java.util.Optional;
 public class MissoesService {
 
     private MissoesRepository missoesRepository;
+    private MissoesMapper missoesMapper;
 
-    public MissoesService(MissoesRepository missoesRepository) {
+    public MissoesService(MissoesRepository missoesRepository, MissoesMapper missoesMapper) {
         this.missoesRepository = missoesRepository;
+        this.missoesMapper = missoesMapper;
     }
 
     // Listar todas as missões
@@ -26,8 +28,10 @@ public class MissoesService {
     }
 
     // Criar missão
-    public MissoesModel criarMissao(MissoesModel missao){
-        return missoesRepository.save(missao);
+    public MissoesDTO criarMissao(MissoesDTO missao){
+        MissoesModel missoesModel = missoesMapper.map(missao); // mapeia o DTO no model
+        missoesModel = missoesRepository.save(missoesModel); // O model é salvo
+        return missoesMapper.map(missoesModel); // Mapeia o model de volta para o DTO
     }
 
     // Deletar missão
