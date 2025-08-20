@@ -32,8 +32,6 @@ public class NinjaService {
         return ninjaPorId.map(ninjaMapper::map).orElse(null);
     }
 
-
-
     // Criar um novo ninja
     public NinjaDTO criarNinja(NinjaDTO ninja){
         // 1. Traduz de DTO para Entidade
