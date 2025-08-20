@@ -1,33 +1,49 @@
 package dev.java10x.CadastroDeNinjas.Missoes;
 
+import dev.java10x.CadastroDeNinjas.Ninjas.NinjaModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MissoesService {
 
     private MissoesRepository missoesRepository;
+    private MissoesMapper missoesMapper;
 
-    public MissoesService(MissoesRepository missoesRepository) {
+    public MissoesService(MissoesRepository missoesRepository, MissoesMapper missoesMapper) {
         this.missoesRepository = missoesRepository;
+        this.missoesMapper = missoesMapper;
     }
 
     // Listar todas as missões
-    public List<MissoesModel> listarMissoes(){
-        return missoesRepository.findAll();
+    public List<MissoesDTO> listarMissoes(){
+        List<MissoesModel> missoes = missoesRepository.findAll();
+
+        return missoes.stream()
+                .map(missoesMapper::map)
+                .collect(Collectors.toList());
     }
 
     // Listar missões por Id
-    public MissoesModel listarPorId(Long id){
+    public MissoesDTO listarPorId(Long id){
         Optional<MissoesModel> missaoId = missoesRepository.findById(id);
-        return missaoId.orElse(null);
+
+        return missaoId.map(missoesMapper::map).orElse(null);
     }
 
     // Criar missão
-    public MissoesModel criarMissao(MissoesModel missao){
-        return missoesRepository.save(missao);
+    public MissoesDTO criarMissao(MissoesDTO missao){
+        // 1. Traduz de DTO para Entidade
+        MissoesModel missoesModel = missoesMapper.map(missao); // mapeia o DTO no model
+
+        // 2. Persiste a Entidade no banco de dados
+        missoesModel = missoesRepository.save(missoesModel); // O model é salvo
+
+        // 3. Traduz a Entidade (agora com ID) de volta para DTO
+        return missoesMapper.map(missoesModel); // Mapeia o model de volta para o DTO
     }
 
     // Deletar missão
@@ -36,10 +52,14 @@ public class MissoesService {
     }
 
     // Atualizar missão
-    public MissoesModel atualizarMissao(Long id, MissoesModel missaoAtualizada){
-        if (missoesRepository.existsById(id)){
-            missaoAtualizada.setId(id);
-            return missoesRepository.save(missaoAtualizada);
+    public MissoesDTO atualizarMissao(Long id, MissoesDTO missoesDTO){
+        Optional<MissoesModel> missaoExistente = missoesRepository.findById(id);
+
+        if (missaoExistente.isPresent()) {
+            MissoesModel missaoAtualizado = missoesMapper.map(missoesDTO);
+            missaoAtualizado.setId(id);
+            MissoesModel missaoSalva = missoesRepository.save(missaoAtualizado);
+            return missoesMapper.map(missaoSalva);
         }
         return null;
     }
