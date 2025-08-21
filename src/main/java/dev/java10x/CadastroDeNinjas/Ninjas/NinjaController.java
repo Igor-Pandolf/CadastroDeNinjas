@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/ninjas")
 public class NinjaController {
 
-    public NinjaService ninjaService;
+    public final NinjaService ninjaService;
 
     public NinjaController(NinjaService ninjaService) {
         this.ninjaService = ninjaService;
@@ -26,8 +26,8 @@ public class NinjaController {
     @PostMapping("/criar")
     public ResponseEntity<String> criarNinja(@RequestBody NinjaDTO ninja){ // @RequestBody vai pegar o Json que o usuário mandou e serializar para o banco de dados
         NinjaDTO novoNinja = ninjaService.criarNinja(ninja);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Ninja criado com sucesso: " + novoNinja.getNome() + " (ID): " + novoNinja.getId());
+        return ResponseEntity.status(HttpStatus.CREATED) // Status 201 Created
+                .body("Ninja criado com sucesso: " + novoNinja.getNome() + " (ID): " + novoNinja.getId()); // Body: mensagem de sucesso
 
     }
 
@@ -35,7 +35,7 @@ public class NinjaController {
     @GetMapping("/listar")
     public ResponseEntity<List<NinjaDTO>> listarNinjas(){
         List<NinjaDTO> ninjas = ninjaService.listarNinjas();
-        return ResponseEntity.ok(ninjas);
+        return ResponseEntity.ok(ninjas); // Status 200 OK, Body: lista de ninjas
     }
 
     // localhost:8080/ninjas/listar/id
@@ -48,10 +48,10 @@ public class NinjaController {
         if (ninja != null){
             return ResponseEntity.ok(ninja);
         } else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Ninja com o id: " + id + " não encontrado!");
+            // O cliente pediu um ninja que não existe
+            return ResponseEntity.status(HttpStatus.NOT_FOUND) // Status 404 Not Found
+                    .body("Ninja com o id: " + id + " não encontrado!"); // Body: mensagem de erro
         }
-
 
     }
 
