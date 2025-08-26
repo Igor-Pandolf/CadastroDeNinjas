@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Ninjas</title>
+
+    <style>
+        /* Importando uma fonte moderna do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* --- Estilos Gerais --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* --- Container da Tabela (para sombra e responsividade) --- */
+        .table-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Adiciona scroll horizontal em telas pequenas */
+            padding: 20px;
+        }
+
+        /* --- Estilização da Tabela Moderna --- */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Remove espaços entre as bordas */
+            text-align: left;
+        }
+
+        /* Cabeçalho da tabela */
+        thead th {
+            background-color: #34495e;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 15px 12px;
+            border-bottom: 2px solid #2c3e50;
+        }
+
+        /* Células do corpo da tabela */
+        tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0; /* Linha sutil para separar as linhas */
+            vertical-align: middle; /* Alinha o conteúdo verticalmente */
+        }
+
+        /* Efeito de hover nas linhas */
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Remove a borda da última linha */
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Estilo para a imagem do ninja */
+        .ninja-img {
+            border-radius: 50%; /* Deixa a imagem redonda */
+            object-fit: cover; /* Garante que a imagem não fique distorcida */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-missions {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* --- Estilização dos Botões Bonitos --- */
+        .actions {
+            /* Usa Flexbox para alinhar os botões */
+            display: flex;
+            gap: 8px; /* Espaço entre os botões */
+            flex-wrap: wrap; /* Permite que os botões quebrem a linha se não houver espaço */
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 400;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px); /* Efeito de "levantar" ao passar o mouse */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Cores específicas para cada botão */
+        .btn-details {
+            background-color: #3498db; /* Azul */
+        }
+        .btn-details:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-edit {
+            background-color: #f1c40f; /* Amarelo */
+        }
+        .btn-edit:hover {
+            background-color: #f39c12;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c; /* Vermelho */
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Lista de Ninjas 🥷</h1>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Email</th>
+            <th>Rank</th>
+            <th>Missões</th>
+            <th>Ações</th> </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ninja: ${ninjas}">
+            <td>
+                <img class="ninja-img" th:src="${ninja.img_url}" alt="Imagem do Ninja" width="80" height="80">
+            </td>
+            <td th:text="${ninja.id}"></td>
+            <td th:text="${ninja.nome}"></td>
+            <td th:text="${ninja.idade}"></td>
+            <td th:text="${ninja.email}"></td>
+            <td th:text="${ninja.rank}"></td>
+            <td>
+                        <span th:if="${ninja.missoes}">
+                            <strong>Nome:</strong> <span th:text="${ninja.missoes.nome}"></span>,
+                            <strong>Dificuldade:</strong> <span th:text="${ninja.missoes.rank}"></span>
+                        </span>
+                <span th:if="${ninja.missoes == null}" class="no-missions">Sem missões cadastradas</span>
+            </td>
+            <td class="actions">
+                <a href="#" class="btn btn-details">Ver</a>
+                <a href="#" class="btn btn-edit">Alterar</a>
+                <a th:href="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}" class="btn btn-delete">Deletar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
