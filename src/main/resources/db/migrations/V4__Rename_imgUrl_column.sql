@@ -1,0 +1,1 @@
+ALTER TABLE tb_cadastro RENAME COLUMN imgUrl TO img_url;
