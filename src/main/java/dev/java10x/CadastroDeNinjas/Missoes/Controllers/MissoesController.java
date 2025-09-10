@@ -1,6 +1,7 @@
-package dev.java10x.CadastroDeNinjas.Missoes;
+package dev.java10x.CadastroDeNinjas.Missoes.Controllers;
 
-import dev.java10x.CadastroDeNinjas.Ninjas.NinjaDTO;
+import dev.java10x.CadastroDeNinjas.Missoes.DTOs.MissoesDTO;
+import dev.java10x.CadastroDeNinjas.Missoes.Services.MissoesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

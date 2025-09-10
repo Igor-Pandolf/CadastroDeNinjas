@@ -1,5 +1,9 @@
-package dev.java10x.CadastroDeNinjas.Ninjas;
+package dev.java10x.CadastroDeNinjas.Ninjas.Services;
 
+import dev.java10x.CadastroDeNinjas.Ninjas.DTOs.NinjaDTO;
+import dev.java10x.CadastroDeNinjas.Ninjas.Mappers.NinjaMapper;
+import dev.java10x.CadastroDeNinjas.Ninjas.Models.NinjaModel;
+import dev.java10x.CadastroDeNinjas.Ninjas.Repositories.NinjaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

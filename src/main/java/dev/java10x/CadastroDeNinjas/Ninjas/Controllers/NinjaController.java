@@ -1,5 +1,7 @@
-package dev.java10x.CadastroDeNinjas.Ninjas;
+package dev.java10x.CadastroDeNinjas.Ninjas.Controllers;
 
+import dev.java10x.CadastroDeNinjas.Ninjas.DTOs.NinjaDTO;
+import dev.java10x.CadastroDeNinjas.Ninjas.Services.NinjaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

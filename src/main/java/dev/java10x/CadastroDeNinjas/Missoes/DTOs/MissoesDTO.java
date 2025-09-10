@@ -1,6 +1,7 @@
-package dev.java10x.CadastroDeNinjas.Missoes;
+package dev.java10x.CadastroDeNinjas.Missoes.DTOs;
 
-import dev.java10x.CadastroDeNinjas.Ninjas.NinjaModel;
+import dev.java10x.CadastroDeNinjas.Missoes.Enums.RankMissao;
+import dev.java10x.CadastroDeNinjas.Ninjas.Models.NinjaModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
